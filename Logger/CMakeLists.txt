@@ -1,5 +1,8 @@
 # 添加库 "Logger"
-add_library(Logger Logger.cpp Logger.h)
+add_library(Logger STATIC
+    Logger.cpp 
+    Logger.h
+)
 
 # 可调试
 set(CMAKE_BUILD_TYPE Debug)
