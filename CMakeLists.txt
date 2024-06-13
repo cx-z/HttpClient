@@ -16,6 +16,7 @@ add_executable(HttpClient main.cpp)
 add_subdirectory(Logger)
 add_subdirectory(DataStruct)
 add_subdirectory(Receiver)
+add_subdirectory(Requester)
 
 # 链接 Logger 库到主可执行文件
-target_link_libraries(HttpClient PRIVATE Logger DataStruct Receiver)
+target_link_libraries(HttpClient PRIVATE Logger DataStruct Receiver Requester)
