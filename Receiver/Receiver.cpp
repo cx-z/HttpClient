@@ -2,11 +2,54 @@
 
 #include <sstream>
 #include <sys/socket.h>
-#include <netinet/in.h>
 #include <unistd.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+
+Receiver::Receiver() : sock(-1) {
+    // 确保地址结构体被清零
+    memset(&server_addr, 0, sizeof(server_addr));
+}
+
+Receiver::~Receiver() {
+    closeConnection();
+}
+
+bool Receiver::connectToServer(const std::string& host, int port) {
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) {
+        std::cerr << "Cannot create socket\n";
+        return false;
+    }
+
+    struct hostent *server = gethostbyname(host.c_str());
+    if (server == nullptr) {
+        std::cerr << "No such host\n";
+        return false;
+    }
+
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(port);
+    memcpy(&server_addr.sin_addr.s_addr, server->h_addr, server->h_length);
+
+    if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        std::cerr << "Connecting failed\n";
+        return false;
+    }
+
+    return true;
+}
+
+void Receiver::closeConnection() {
+    if (sock != -1) {
+        close(sock);
+        sock = -1;
+    }
+}
 
 // 封装的接收数据函数
-std::string receiveData(int sock) {
+std::string Receiver::receiveData(int sock) {
+    this->sock = sock;
     const int buffer_size = 4096;
     char buffer[buffer_size];
     std::string response;

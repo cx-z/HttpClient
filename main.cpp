@@ -1,20 +1,30 @@
 #include"Logger.h"
 #include"Receiver.h"
+#include"Requester.h"
 #include"HttpResponse.h"
 
 int main() {
-    std::string http_response = 
-    "HTTP/1.1 200 OK\r\n"
-    "Content-Type: text/html; charset=UTF-8\r\n"
-    "Content-Length: 13\r\n"
-    "Connection: close\r\n"
-    "Date: Tue, 27 Apr 2021 12:28:53 GMT\r\n"
-    "\r\n"
-    "Hello, world!";
+    std::string host = "www.baidu.com";
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    Receiver receiver;
+    Requester requester;
 
-    Receiver receiver = Receiver();
-    HttpResponse response = receiver.parseHttpResponse(http_response);
-    std::cout << response;
+    if (receiver.connectToServer(host, 80)) {  // HTTP默认端口80
+        std::cout << "Connected to " << host << std::endl;
+
+        std::string request = requester.createGetRequest(host);
+        if (requester.sendData(request, sock)) {
+            std::cout << "Request sent, waiting for response..." << std::endl;
+            std::string response = receiver.receiveData(sock);
+            std::cout << "Response received:\n" << response << std::endl;
+        } else {
+            std::cerr << "Failed to send request." << std::endl;
+        }
+    } else {
+        std::cerr << "Failed to connect to the server." << std::endl;
+    }
+
+    receiver.closeConnection();
 
     return 0;
 }
