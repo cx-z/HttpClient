@@ -32,7 +32,8 @@ bool Receiver::connectToServer(const std::string& host, int port) {
     server_addr.sin_port = htons(port);
     memcpy(&server_addr.sin_addr.s_addr, server->h_addr, server->h_length);
 
-    if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+    int connectCode = connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr));
+    if (connectCode < 0) {
         std::cerr << "Connecting failed\n";
         return false;
     }
