@@ -17,6 +17,7 @@ add_subdirectory(Logger)
 add_subdirectory(DataStruct)
 add_subdirectory(Receiver)
 add_subdirectory(Requester)
+add_subdirectory(Utils)
 
 # 链接 Logger 库到主可执行文件
 target_link_libraries(HttpClient PRIVATE Logger DataStruct Receiver Requester)

@@ -1,6 +1,8 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include"Utils.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -9,7 +11,7 @@
 #include <mutex>
 #include <condition_variable>
 
-#define LOG(message) Logger::getInstance()->log(message, __FILE__, __FUNCTION__)
+#define LOG(format, ...) Logger::getInstance()->log(Utils::string_format(format, ##__VA_ARGS__), __FILE__, __FUNCTION__)
 
 class Logger {
 private:

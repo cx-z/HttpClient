@@ -4,8 +4,7 @@ add_library(Logger STATIC
     Logger.h
 )
 
-# 可调试
-set(CMAKE_BUILD_TYPE Debug)
+target_link_libraries(Logger PUBLIC Utils)
 
 # 公开头文件目录
 target_include_directories(Logger PUBLIC

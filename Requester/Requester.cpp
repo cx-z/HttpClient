@@ -1,10 +1,14 @@
 #include"Requester.h"
+#include"Logger.h"
 
 #include <sys/socket.h>
+#include <string>
 
 // Requester.cpp中实现
 bool Requester::sendData(const std::string& data, int sock) {
-    if (send(sock, data.c_str(), data.length(), 0) < 0) {
+    int sendCode = send(sock, data.c_str(), data.length(), 0);
+    LOG("SendCode %d", sendCode);
+    if (sendCode < 0) {
         std::cerr << "Failed to send data\n";
         return false;
     }
