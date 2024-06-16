@@ -48,6 +48,16 @@ run_project() {
     ./build/HttpClient
 }
 
+# 函数定义：清理项目
+clean_project() {
+    if [ -d "build" ]; then
+        echo "Cleaning build directory..."
+        rm -rf build/*
+    else
+        echo "Build directory does not exist. Nothing to clean."
+    fi
+}
+
 # 主脚本逻辑：根据参数执行操作
 case "$1" in
     build)
@@ -56,8 +66,11 @@ case "$1" in
     run)
         run_project
         ;;
+    clean)
+        clean_project
+        ;;
     *)
-        echo "Usage: $0 {build|run}"
+        echo "Usage: $0 {build|run|clean}"
         exit 1
         ;;
 esac
