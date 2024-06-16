@@ -6,8 +6,8 @@
 
 // Requester.cpp中实现
 bool Requester::sendData(const std::string& data, int sock) {
-    int sendCode = send(sock, data.c_str(), data.length(), 0);
-    LOG("SendCode %d", sendCode);
+    ssize_t sendCode = send(sock, data.c_str(), data.length(), 0);
+    LOG("Send data %s, retCode %d, error %s", data.c_str(), sendCode, strerror(errno));
     if (sendCode < 0) {
         std::cerr << "Failed to send data\n";
         return false;

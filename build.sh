@@ -9,7 +9,7 @@ build_project() {
     fi
 
     # 进入build目录
-    cd build
+    cd build || { echo "Failed to enter build directory"; exit 1; }
 
     # 清理build目录中的所有文件
     echo "Cleaning build directory..."
@@ -31,15 +31,12 @@ build_project() {
 
 # 函数定义：运行项目
 run_project() {
-    # 检查build目录是否存在
-    if [ ! -d "build" ]; then
-        echo "Build directory does not exist. Please build the project first."
-        exit 1
-    fi
+    # 执行构建项目
+    build_project
 
     # 检查可执行文件是否存在
     if [ ! -f "build/HttpClient" ]; then
-        echo "Executable not found. Please build the project first."
+        echo "Executable not found. Build may have failed."
         exit 1
     fi
 
