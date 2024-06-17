@@ -9,7 +9,7 @@ int main() {
     Receiver receiver;
     Requester requester;
 
-    if (receiver.connectToServer(host, 80)) {  // HTTP默认端口80
+    if (receiver.connectToServer(host, 80, sock)) {  // HTTP默认端口80
         std::cout << "Connected to " << host << std::endl;
 
         std::string request = requester.createGetRequest(host);

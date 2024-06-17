@@ -4,6 +4,6 @@
 class Utils
 {
 public:
-    static std::string string_format(const std::string& format, ...);
+    static std::string string_format(const std::string format, ...);
 };
 

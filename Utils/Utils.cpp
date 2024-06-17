@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <cstdarg>
 
-std::string Utils::string_format(const std::string& format, ...) {
+std::string Utils::string_format(const std::string format, ...) {
     // 预估格式化后字符串的长度
     int size = 1024;
     char* buffer = new char[size];

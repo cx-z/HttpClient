@@ -1,4 +1,5 @@
 #include "Receiver.h"
+#include "Logger.h"
 
 #include <sstream>
 #include <sys/socket.h>
@@ -15,8 +16,7 @@ Receiver::~Receiver() {
     closeConnection();
 }
 
-bool Receiver::connectToServer(const std::string& host, int port) {
-    sock = socket(AF_INET, SOCK_STREAM, 0);
+bool Receiver::connectToServer(const std::string& host, int port, int sock) {
     if (sock < 0) {
         std::cerr << "Cannot create socket\n";
         return false;
@@ -33,6 +33,7 @@ bool Receiver::connectToServer(const std::string& host, int port) {
     memcpy(&server_addr.sin_addr.s_addr, server->h_addr, server->h_length);
 
     int connectCode = connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr));
+    LOG("connected to %s, retCode %d, error %s", host.c_str(), connectCode, strerror(errno));
     if (connectCode < 0) {
         std::cerr << "Connecting failed\n";
         return false;

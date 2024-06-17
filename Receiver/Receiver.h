@@ -13,7 +13,7 @@ public:
     Receiver();
     ~Receiver();
 
-    bool connectToServer(const std::string& host, int port);
+    bool connectToServer(const std::string& host, int port, int sock);
     void closeConnection();
     std::string receiveData(int sock);
     HttpResponse parseHttpResponse(const std::string& response);
