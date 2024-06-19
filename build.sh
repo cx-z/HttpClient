@@ -49,7 +49,7 @@ run_project() {
 clean_project() {
     if [ -d "build" ]; then
         echo "Cleaning build directory..."
-        rm -rf build/*
+        rm -rf build/{*,.*}
     else
         echo "Build directory does not exist. Nothing to clean."
     fi
